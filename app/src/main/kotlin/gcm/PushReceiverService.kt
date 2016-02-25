@@ -2,6 +2,7 @@ package com.ambush.gcmtutorial.gcm
 
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.NotificationCompat
 import android.util.Log
@@ -16,8 +17,7 @@ class PushReceiverService : GcmListenerService() {
         Log.d(TAG, "From: " + from!!)
         Log.d(TAG, "Message: " + message)
 
-
-
+        sendOrderedBroadcast(Intent("com.ambush.gcmtutorial.gcm.PushReceived"), null)
 //        val mBuilder = NotificationCompat.Builder(this)
 //                .setSmallIcon(android.R.drawable.sym_def_app_icon)
 //                .setContentTitle("My notification")
@@ -27,5 +27,4 @@ class PushReceiverService : GcmListenerService() {
 //        // mId allows you to update the notification later on.
 //        mNotificationManager.notify(666, mBuilder.build());
     }
-
 }

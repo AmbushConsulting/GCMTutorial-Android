@@ -1,38 +1,40 @@
 package com.ambush.gcmtutorial.views
 
-import android.support.v4.app.NavUtils
-import android.support.v4.app.TaskStackBuilder
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.support.v7.app.AppCompatActivity
-import android.view.MenuItem
+import android.util.Log
 
 open class BaseActivity : AppCompatActivity() {
 
-    private fun recreateBackStack() {
-        val upIntent = NavUtils.getParentActivityIntent(this)
-        if (upIntent == null) return
-        TaskStackBuilder.create(this)
-                .addNextIntentWithParentStack(upIntent)
-                .startActivities()
-    }
+	var broadcastReceiver: ActivityBroadcastReceiver? = null
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                if (isTaskRoot) {
-                    recreateBackStack()
-                    return true
-                }
-                return super.onOptionsItemSelected(item)
-            }
-            else -> return super.onOptionsItemSelected(item)
-        }
-    }
+	override fun onStart() {
+		super.onStart()
+		broadcastReceiver = ActivityBroadcastReceiver()
+		val filter = IntentFilter("com.ambush.gcmtutorial.gcm.PushReceived")
+		filter.priority = 100
+		registerReceiver(broadcastReceiver, filter)
+	}
 
-    override fun onBackPressed() {
-        if (isTaskRoot && NavUtils.getParentActivityIntent(this) != null) {
-            recreateBackStack()
-            return
-        }
-        super.onBackPressed()
-    }
+	override fun onStop() {
+		super.onStop()
+		unregisterReceiver(broadcastReceiver)
+		broadcastReceiver = null
+	}
+
+	fun handleNotification(): Boolean {
+		return false
+	}
+
+	inner class ActivityBroadcastReceiver : BroadcastReceiver() {
+		override fun onReceive(cancel: Context, intent: Intent) {
+			handleNotification()
+			Log.i("ActivityBroadcastReceiver", "Received message")
+			abortBroadcast()
+		}
+
+	}
 }
