@@ -1,9 +1,9 @@
 package com.ambush.gcmtutorial.views
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import com.ambush.gcmtutorial.R
-import views.BaseActivity
 
 class HomeActivity : BaseActivity() {
 
@@ -14,5 +14,12 @@ class HomeActivity : BaseActivity() {
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
     }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setContentView(R.layout.activity_home)
+    }
+
+
 
 }

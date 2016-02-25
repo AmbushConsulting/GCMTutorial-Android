@@ -17,6 +17,7 @@ class PushReceiverService : GcmListenerService() {
         Log.d(TAG, "Message: " + message)
 
 
+
 //        val mBuilder = NotificationCompat.Builder(this)
 //                .setSmallIcon(android.R.drawable.sym_def_app_icon)
 //                .setContentTitle("My notification")

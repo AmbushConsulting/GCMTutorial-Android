@@ -20,13 +20,41 @@
         <activity
             android:name=".views.HomeActivity"
             android:label="@string/app_name"
+            android:launchMode="standard"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".views.ListActivity"
+            android:parentActivityName="com.ambush.gcmtutorial.views.HomeActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_LIST"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ambush.gcmtutorial.views.HomeActivity"/>
+        </activity>
+
+        <activity
+            android:name=".views.DetailActivity"
+            android:launchMode="standard"
+            android:parentActivityName="com.ambush.gcmtutorial.views.ListActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_DETAIL"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ambush.gcmtutorial.views.ListActivity"/>
         </activity>
 
         <receiver
@@ -59,6 +87,13 @@
             android:name="com.ambush.gcmtutorial.gcm.GCMRegistrationIntentService"
             android:exported="false">
         </service>
+
+        <receiver android:name=".gcm.PushBroadcastReceiver">
+            <intent-filter
+                android:priority="1">
+                <action android:name="com.ambush.gcmtutorial.gcm.PushReceived"/>
+            </intent-filter>
+        </receiver>
 
     </application>
 
